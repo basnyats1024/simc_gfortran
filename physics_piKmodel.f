@@ -621,7 +621,7 @@ c         write(6,*)' Q2_central = ',q2_cent_g
          if (which_kaon.eq.0) then ! p->K+Lambda0
 c            if (q2_cent_g.lt.6.25) then
             write(6,*)'Selecting VR K+L0 model for Q^2=0.1-9.5, W=3.15'
-            nfiles=18
+            nfiles=20
             Wset=3.15
             filename(1)='VR/ep_peekl_q20p10_w3p15.dat'
             filename(2)='VR/ep_peekl_q20p50_w3p15.dat'
@@ -638,13 +638,37 @@ c            if (q2_cent_g.lt.6.25) then
             filename(13)='VR/ep_peekl_q26p00_w3p15.dat'
             filename(14)='VR/ep_peekl_q26p50_w3p15.dat'
             filename(15)='VR/ep_peekl_q27p00_w3p15.dat'
-            filename(16)='VR/ep_peekl_q28p50_w3p15.dat'
-            filename(17)='VR/ep_peekl_q29p00_w3p15.dat'
-            filename(18)='VR/ep_peekl_q29p50_w3p15.dat'
+            filename(16)='VR/ep_peekl_q27p50_w3p15.dat'
+            filename(17)='VR/ep_peekl_q28p00_w3p15.dat'
+            filename(18)='VR/ep_peekl_q28p50_w3p15.dat'
+            filename(19)='VR/ep_peekl_q29p00_w3p15.dat'
+            filename(20)='VR/ep_peekl_q29p50_w3p15.dat'	
 c            endif
          elseif (which_kaon.eq.1) then ! p->K+Sigma0
-            write(6,*)'Selecting VR K+S0 model for Q^2=?, W=?'
-            stop
+            write(6,*)'Selecting VR K+S0 model for Q^2=0.1-9.5, W=3.15'
+            nfiles=20
+            Wset=3.15
+            filename(1)='VR/ep_peeks_q20p10_w3p15.dat'
+            filename(2)='VR/ep_peeks_q20p50_w3p15.dat'
+            filename(3)='VR/ep_peeks_q21p00_w3p15.dat'
+            filename(4)='VR/ep_peeks_q21p50_w3p15.dat'
+            filename(5)='VR/ep_peeks_q22p00_w3p15.dat'
+            filename(6)='VR/ep_peeks_q22p50_w3p15.dat'
+            filename(7)='VR/ep_peeks_q23p00_w3p15.dat'
+            filename(8)='VR/ep_peeks_q23p50_w3p15.dat'
+            filename(9)='VR/ep_peeks_q24p00_w3p15.dat'
+            filename(10)='VR/ep_peeks_q24p50_w3p15.dat'
+            filename(11)='VR/ep_peeks_q25p00_w3p15.dat'
+            filename(12)='VR/ep_peeks_q25p50_w3p15.dat'
+            filename(13)='VR/ep_peeks_q26p00_w3p15.dat'
+            filename(14)='VR/ep_peeks_q26p50_w3p15.dat'
+            filename(15)='VR/ep_peeks_q27p00_w3p15.dat'
+            filename(16)='VR/ep_peeks_q27p50_w3p15.dat'
+            filename(17)='VR/ep_peeks_q28p00_w3p15.dat'
+            filename(18)='VR/ep_peeks_q28p50_w3p15.dat'
+            filename(19)='VR/ep_peeks_q29p00_w3p15.dat'
+            filename(20)='VR/ep_peeks_q29p50_w3p15.dat'
+c            endif
          elseif (which_kaon.eq.2) then ! n->K+Lambda-
             write(6,*)'Selecting VR K+L- model for Q^2=?, W=?'
             stop
@@ -965,25 +989,44 @@ C NUMBERS MAY BE WRONG.  AERO BETWEEN S2Y AND S2X IN SOS.
 
 C Beta/Gamma for decay need to use momentum after radiation/eloss, not vertex
 C momentum.  Get particle momentum from main%SP%p%delta
-
-	if (.not.doing_decay) then
-	  if (hadron_arm.eq.1) then
-	    zaero = 0.			!no aerogel yet, use full length.
-	  else if (hadron_arm.eq.2) then
+	!print*,'zaero before the if statement: ', zaero
+	!if (.not.doing_decay) then
+	  !if (hadron_arm.eq.1) then
+	   !zaero = 0.			!no aerogel yet, use full length.
+	  !else if (hadron_arm.eq.2) then
 *	    zaero = -76.		!aero at 270cm,last project=346(cal).
-	    zaero = -82.8		!From Rick: aero at 263.2cm,last project=346(cal).
-	  else if (hadron_arm.eq.3) then
-	    zaero = -183.		!aero at 130cm,last project=313(S2)
-	  else if (hadron_arm.eq.4) then
-	    zaero = -183.
-	  endif
-	  pathlen = main%FP%p%path + zaero*(1+main%FP%p%dx**2+main%FP%p%dy**2)
-	  p_kaon = spec%p%P*(1.+main%SP%p%delta/100.)
-	  betak = spec%p%P/sqrt(spec%p%P**2+Mh2)
-	  gammak = 1./sqrt(1.-betak**2)
-	  survivalprob = 1./exp(pathlen/(ctau*betak*gammak))
-	  decdist = survivalprob		!decdist in ntuple
-	endif
+	    !zaero = -82.8		!From Rick: aero at 263.2cm,last project=346(cal).
+	  !else if (hadron_arm.eq.3) then
+	   !zaero = -183.		!aero at 130cm,last project=313(S2)
+	  !else if (hadron_arm.eq.4) then
+	    !zaero = -183.
+	  !endif
+	  !print*,'zaero after the if statement: ',zaero
+	  !print*,'main%FP%p%path: ',main%FP%p%path
+	  !print*,'main%FP%p%dx: ',main%FP%p%dx
+	  !print*,'main%FP%p%dy: ',main%FP%p%dy
+	  !pathlen = main%FP%p%path + zaero*(1+main%FP%p%dx**2+main%FP%p%dy**2)
+	  !print*,'pathlen: ',pathlen
+	  !print*,'\n'
+	  !print*,'spec%p%P: ',spec%p%P
+	  !print*,'main%SP%p%delta: ', main%SP%p%delta 
+	  !p_kaon = spec%p%P*(1.+main%SP%p%delta/100.)
+	  !print*,'p_kaon: ',p_kaon
+	  !print*,'\n'
+	  !print*,'rest mass of kaon squared: ', Mh2
+	  !betak = spec%p%P/sqrt(spec%p%P**2+Mh2)
+	  !print*, 'betak: ',betak
+	  !gammak = 1./sqrt(1.-btak**2)
+	  !print*,'gammak: ',gammak
+	  !survivalprob = 1./exp(pathlen/(ctau*betak*gammak))
+	  !print*,'P(survival): ',survivalprob
+	  !decdist = survivalprob		!decdist in ntuple
+	  !print*,'Decay Distance: ',decdist
+	  !survivalprob = 1.
+	  !decdist = 1.
+	!endif
+
+!! Commented out by Samip, UofRegina to solve the issue with decay.. Previously had problems with rates when decay flag was turned off but commenting this section out seems to have solved the issue.
 
  202  format(/11X,f5.1/)
  203  format(11X,f5.0)

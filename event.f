@@ -1653,8 +1653,12 @@ C If using Coulomb cirrections, include focusing factor
 
 	main%weight = main%SF_weight*main%jacobian*main%gen_weight*main%sigcc
 	main%weight = main%weight * tgtweight	!correct for #/nucleons involved
-	if ((doing_kaon.or.doing_semika) .and. .not.doing_decay) 
-     >		main%weight = main%weight*survivalprob
+        !print*, 'I am inside EVENT.F right now!!!!!!'
+        !print*, 'MAIN%WEIGHT BEFORE THE IF: ',main%weight
+        !print*, 'SURVIVAL PROB: ',survivalprob
+	!if ((doing_kaon.or.doing_semika) .and. .not.doing_decay) 
+    ! >		main%weight = main%weight/survivalprob
+      !print*, 'MAIN%WEIGHT AFTER THE IF: ',main%weight
 	if (debug(5))write(6,*) 'gen_weight = ',main%gen_weight,
      >		main%jacobian,main%sigcc,main%weight
 
